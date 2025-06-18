@@ -1,52 +1,16 @@
-import { Colors } from "@/constants/Colors";
-import { colors2, constant } from "@/constants/Constans";
+import { constant } from "@/constants/Constans";
 import { useColorScheme } from "@/hooks/useColorScheme.web";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useDrawerProgress } from "@react-navigation/drawer";
+import { DrawerItemList, useDrawerProgress } from "@react-navigation/drawer";
 import React, { useReducer } from "react";
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import Animated, { interpolate, useAnimatedStyle, useDerivedValue, withTiming } from "react-native-reanimated";
 //import { ProfileMenu, ProjectsArray } from "../arrays";
-import DrawerItemList from "./DrawerItemList";
 import { Image } from "expo-image";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-type CustomDrawerProps = {
-  label: string;
-  onPress?: () => void;
-  type: string;
-  name: string;
-  activeItemColor?: string;
-  color: string;
-};
-
-const ProjectItem = ({ label, onPress, type, name, activeItemColor, color }: CustomDrawerProps) => {
-  const colorScheme = useColorScheme() ?? "light";
-  return (
-    <TouchableOpacity onPress={onPress} style={[styles.row, { backgroundColor: activeItemColor }]}>
-      <View style={[styles.iconContainer, { backgroundColor: color }]}>
-        <MaterialCommunityIcons type={type} name={"home-outline"} color={Colors[colorScheme].text} />
-      </View>
-      <Text style={styles.label}>{label}</Text>
-    </TouchableOpacity>
-  );
-};
-
-type ProfileItemProps = {
-  label: string;
-  onPress?: () => void;
-  type: string;
-  name: string;
-};
-
-const ProfileItem = ({ label, onPress, type, name }: ProfileItemProps) => {
-  const colorScheme = useColorScheme() ?? "light";
-  return (
-    <TouchableOpacity onPress={onPress} style={[styles.row, { margin: 50 }]}>
-      <MaterialCommunityIcons type={type} name={"home-outline"} color={Colors[colorScheme].text} />
-      <Text style={styles.label}>{label}</Text>
-    </TouchableOpacity>
-  );
-};
+//import DrawerItemList from "./DrawerItemList";
+import { Colors } from "@/constants/Colors";
+import { LinearGradient } from "expo-linear-gradient";
 
 const CustomDrawer = (props: any) => {
   const colorScheme = useColorScheme() ?? "light";
@@ -86,19 +50,22 @@ const CustomDrawer = (props: any) => {
     });
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* header */}
-      <Animated.View style={[styles.row, styles.view, styles.marginTop, viewStyles2("top")]}>
-        <View style={styles.iconContainer}>
-          <Image style={styles.profile} source={require('../assets/images/react-logo.png')} />
-        </View>
-        <Text style={styles.headerTitle}>Test Test</Text>
-      </Animated.View>
-      {/* Drawer List Item */}
-      <Animated.View {...props} showsVerticalScrollIndicator={false} style={[styles.center, viewStyles]}>
-        <DrawerItemList {...props} styles={styles} />
-      </Animated.View>
-    </SafeAreaView>
+      <SafeAreaView style={styles.container}>
+        {/* header */}
+        <Animated.View style={[styles.row, styles.view, styles.marginTop, viewStyles2("top")]}>
+          <View style={styles.ProfileImageContainer}>
+            <Image style={styles.profile} source={require("../assets/images/profile.jpg")} />
+          </View>
+          <View>
+            <Text style={styles.headerTitle}>john doe</Text>
+            <Text style={styles.ProfileStatus}>online</Text>
+          </View>
+        </Animated.View>
+        {/* Drawer List Item */}
+        <Animated.View {...props} showsVerticalScrollIndicator={false} style={[styles.center, styles.ItemList, viewStyles]}>
+          <DrawerItemList {...props} />
+        </Animated.View>
+      </SafeAreaView>
   );
 };
 
@@ -109,16 +76,22 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   view: {
-    backgroundColor: colors2.white,
-    borderRadius: constant.borderRadius,
-    marginHorizontal: constant.SPACING / 2,
-    padding: constant.SPACING / 1.5,
+    marginHorizontal: 10,
+    padding: 10,
+  },
+  ItemList: {
+    marginHorizontal: 20,
+    padding: 10,
+  },
+  background: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    height: "100%",
   },
   marginTop: {
-    marginTop: constant.SPACING / 2,
-  },
-  marginBottom: {
-    marginBottom: constant.SPACING / 2,
+    marginTop: 20,
   },
   center: {
     flex: 1, // Take available space
@@ -135,42 +108,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  label: {
-    fontSize: constant.textFontSize,
-    color: colors2.dark,
-    paddingHorizontal: constant.SPACING,
-  },
-  notificationBadge: {
-    paddingVertical: constant.SPACING / 5,
-    paddingHorizontal: constant.SPACING / 2,
-    borderRadius: constant.borderRadius / 2,
-  },
-  iconContainer: {
-    padding: constant.SPACING / 2.4,
+  ProfileImageContainer: {
     borderRadius: constant.borderRadius,
-    margin: constant.SPACING / 2,
-    backgroundColor: colors2.primary,
-  },
-  separator: {
-    width: "100%",
-    height: 1,
-    backgroundColor: colors2.darkGray,
-    marginVertical: constant.SPACING / 2,
   },
   headerTitle: {
-    fontSize: constant.titleFontSize,
-    color: colors2.dark,
+    fontSize: 24,
+    color: Colors["dark"].text, // Use Colors from react-native
+  },
+  ProfileStatus: {
+    fontSize: 16,
+    color: Colors["dark"].textLight, // Use Colors from react-native
   },
   profile: {
-    marginVertical: constant.SPACING / 2,
-    marginRight: constant.SPACING,
-    marginLeft: constant.SPACING / 2,
+    marginVertical: 5,
+    marginRight: 15,
+    marginLeft: 5,
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: colors2.light,
-  },
-  profileText: {
-    color: colors2.dark,
   },
 });
