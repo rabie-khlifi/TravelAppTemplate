@@ -22,10 +22,14 @@ export default function TabLayout() {
           tabBarButton: HapticTab,
           tabBarStyle: {
             position: "absolute",
-            borderRadius: 50,
+            borderTopRightRadius: 35,
+            borderTopLeftRadius: 35,
             height: 70,
-            borderTopWidth: 0,
+            borderTopWidth: 0.5,
+            borderLeftWidth: 0.5,
+            borderRightWidth: 0.5,
             paddingTop: 10,
+            borderColor : Colors[colorScheme ?? "light"].border, // custom border color
             backgroundColor: Colors[colorScheme ?? "light"].background, // custom background color
             ...Platform.select({
               ios: {
