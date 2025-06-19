@@ -1,9 +1,10 @@
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { Colors } from "@/constants/Colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons"; // Changed to MaterialCommunityIcons
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, useColorScheme, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export const HEADER_HEIGHT = 56;
@@ -17,7 +18,7 @@ type CustomHeaderProps = {
 const CustomHeader: React.FC<CustomHeaderProps> = ({ title, leftType = "drawer", onSearchPress }) => {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
-
+  const colorScheme = useColorScheme();
   const handleLeftPress = () => {
     if (leftType === "drawer") {
       // @ts-ignore
@@ -30,7 +31,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title, leftType = "drawer",
   return (
     <ThemedView style={[styles.container, { top: insets.top }]}>
       <TouchableOpacity onPress={handleLeftPress} style={styles.iconButton}>
-        <MaterialCommunityIcons name={leftType === "drawer" ? "menu" : "arrow-left"} size={28} color="#222" />
+        <MaterialCommunityIcons name={leftType === "drawer" ? "menu" : "arrow-left"} size={28} color={Colors[colorScheme ?? "light"].text} />
       </TouchableOpacity>
       <View style={styles.titleWrapper}>
         <ThemedText type="title" numberOfLines={1} style={styles.title}>
@@ -38,7 +39,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title, leftType = "drawer",
         </ThemedText>
       </View>
       <TouchableOpacity onPress={onSearchPress} style={styles.iconButton} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
-        <MaterialCommunityIcons name="magnify" size={26} color="#222" />
+        <MaterialCommunityIcons name="magnify" size={26} color={Colors[colorScheme ?? "light"].text} />
       </TouchableOpacity>
     </ThemedView>
   );
@@ -72,6 +73,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "Roboto",
     fontWeight: "700",
-    color: "#222",
   },
 });

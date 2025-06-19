@@ -1,12 +1,11 @@
 import { FlatList, StyleSheet, View } from "react-native";
 
 import CustomHeader, { HEADER_HEIGHT } from "@/components/CustomHeader";
+import HorizontalCard from "@/components/HorisontalCard";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { Colors } from "@/constants/Colors";
+import VerticalCard from "@/components/VerticalCard";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import { Image } from "expo-image";
-import { LinearGradient } from "expo-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
@@ -77,24 +76,7 @@ export default function HomeScreen() {
             ItemSeparatorComponent={() => <View style={{ width: 16 }} />}
             contentContainerStyle={{ paddingHorizontal: 16 }}
             showsHorizontalScrollIndicator={false}
-            renderItem={(card) => {
-              return (
-                <ThemedView style={styles.stepContainer}>
-                  <ThemedView style={{ height: 240, width: 150 }}>
-                    <Image source={{ uri: card.item.image }} style={{ width: "100%", height: "100%" }} />
-                    <LinearGradient
-                      // Background Linear Gradient
-                      colors={["transparent", "transparent", "#007BA180"]}
-                      //TODO: look how to change the gradient position
-                      style={styles.cardBackground}
-                    />
-                    <ThemedText style={styles.title} type="title">
-                      {card.item.title}
-                    </ThemedText>
-                  </ThemedView>
-                </ThemedView>
-              );
-            }}
+            renderItem={(card) => <HorizontalCard title={card.item.title} image={card.item.image} />}
           />
         </ThemedView>
         <ThemedView style={styles.subTitleContainer}>
@@ -102,26 +84,11 @@ export default function HomeScreen() {
         </ThemedView>
         <FlatList
           data={list}
+          style={{ marginTop: 20 }}
           ItemSeparatorComponent={() => <View style={{ width: 16 }} />}
           contentContainerStyle={{ paddingBottom: tabBarHeight, paddingHorizontal: 16 }}
           showsVerticalScrollIndicator={false}
-          renderItem={(card) => {
-            return (
-              <ThemedView style={styles.stepContainer}>
-                <ThemedView style={{ height: 100, width: "100%", backgroundColor: Colors["dark"].icon }}>
-                  <ThemedView style={styles.listImage}>
-                    <Image source={{ uri: card.item.image }} style={{ width: "100%", height: "100%" }} />
-                  </ThemedView>
-                  <ThemedText style={styles.title} type="title">
-                    {card.item.title}
-                  </ThemedText>
-                  <ThemedText style={styles.title} type="title">
-                    {card.item.description}
-                  </ThemedText>
-                </ThemedView>
-              </ThemedView>
-            );
-          }}
+          renderItem={(card) => <VerticalCard description={card.item.description} title={card.item.title} image={card.item.image} />}
         />
       </ThemedView>
     </>
@@ -139,32 +106,5 @@ const styles = StyleSheet.create({
   subTitleContainer: {
     paddingTop: 10,
     paddingHorizontal: 16,
-  },
-  stepContainer: {
-    borderRadius: 15,
-    overflow: "hidden",
-  },
-  title: {
-    position: "absolute",
-    bottom: 12,
-    left: 12,
-    color: Colors["dark"].text,
-    fontSize: 20,
-  },
-  cardBackground: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    height: "100%",
-  },
-  listImage: {
-    overflow: "hidden",
-    height: "90%",
-    width: 50,
-    borderRadius: 15,
-    position: "absolute",
-    top: "50%",
-    transform: [{ translateY: -0.5 * 0.9 * 100 }], // 0.9 * 100 = 90% of parent height, so -45 to center
   },
 });
