@@ -10,7 +10,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 //import DrawerItemList from "./DrawerItemList";
 import { Colors } from "@/constants/Colors";
-import { LinearGradient } from "expo-linear-gradient";
 
 const CustomDrawer = (props: any) => {
   const colorScheme = useColorScheme() ?? "light";
@@ -50,22 +49,22 @@ const CustomDrawer = (props: any) => {
     });
 
   return (
-      <SafeAreaView style={styles.container}>
-        {/* header */}
-        <Animated.View style={[styles.row, styles.view, styles.marginTop, viewStyles2("top")]}>
-          <View style={styles.ProfileImageContainer}>
-            <Image style={styles.profile} source={require("../assets/images/profile.jpg")} />
-          </View>
-          <View>
-            <Text style={styles.headerTitle}>john doe</Text>
-            <Text style={styles.ProfileStatus}>online</Text>
-          </View>
-        </Animated.View>
-        {/* Drawer List Item */}
-        <Animated.View {...props} showsVerticalScrollIndicator={false} style={[styles.center, styles.ItemList, viewStyles]}>
-          <DrawerItemList {...props} />
-        </Animated.View>
-      </SafeAreaView>
+    <SafeAreaView style={styles.container}>
+      {/* header */}
+      <Animated.View style={[styles.row, styles.view, styles.marginTop, viewStyles2("top")]}>
+        <View style={styles.ProfileImageContainer}>
+          <Image style={styles.profile} source={require("../assets/images/profile.jpg")} />
+        </View>
+        <View>
+          <Text style={styles.headerTitle}>John doe</Text>
+          <Text style={styles.ProfileStatus}>online</Text>
+        </View>
+      </Animated.View>
+      {/* Drawer List Item */}
+      <Animated.View {...props} showsVerticalScrollIndicator={false} style={[styles.center, styles.ItemList, viewStyles]}>
+        <DrawerItemList {...props} />
+      </Animated.View>
+    </SafeAreaView>
   );
 };
 
@@ -113,11 +112,14 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 24,
-    color: Colors["dark"].text, // Use Colors from react-native
+    color: Colors["dark"].text,
+    fontFamily: "Roboto",
+    fontWeight: "900",
   },
   ProfileStatus: {
     fontSize: 16,
-    color: Colors["dark"].textLight, // Use Colors from react-native
+    color: Colors["dark"].textLight,
+    fontFamily: "Roboto",
   },
   profile: {
     marginVertical: 5,

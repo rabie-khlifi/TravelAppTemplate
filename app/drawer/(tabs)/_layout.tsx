@@ -29,7 +29,7 @@ export default function TabLayout() {
             borderLeftWidth: 0.5,
             borderRightWidth: 0.5,
             paddingTop: 10,
-            borderColor : Colors[colorScheme ?? "light"].border, // custom border color
+            borderColor: Colors[colorScheme ?? "light"].border, // custom border color
             backgroundColor: Colors[colorScheme ?? "light"].background, // custom background color
             ...Platform.select({
               ios: {

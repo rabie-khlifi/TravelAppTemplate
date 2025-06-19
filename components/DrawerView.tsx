@@ -23,8 +23,8 @@ const DrawerView = ({ children, style }: any) => {
   });
   return (
     <Animated.View style={styles.wrapper}>
-      <Animated.View style={[styles.dropCard, cardStyles]}></Animated.View>
-      <Animated.View style={[styles.container, style, viewStyles]}>{children}</Animated.View>;
+      <Animated.View style={[styles.dropCard, cardStyles]} />
+      <Animated.View style={[styles.container, style, viewStyles]}>{children}</Animated.View>
     </Animated.View>
   );
 };

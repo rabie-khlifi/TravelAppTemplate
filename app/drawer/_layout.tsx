@@ -30,7 +30,7 @@ export default function DrawerLayout() {
             },
             drawerType: "slide",
             overlayColor: "transparent",
-            swipeEdgeWidth: Platform.OS === "android" ? 180 : undefined,
+            swipeEdgeWidth: Platform.OS === "android" ? 100 : undefined,
           }}
           drawerContent={(props) => <CustomDrawer {...props} />} // This is the custom drawer content component
         >
