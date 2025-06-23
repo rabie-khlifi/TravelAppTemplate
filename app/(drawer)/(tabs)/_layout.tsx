@@ -63,7 +63,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="favorites"
           options={{
-            title: "Explore",
+            title: "favorites",
             tabBarIcon: ({ color, focused }) => (
               <MaterialCommunityIcons size={30} name={focused ? "cards-heart" : "cards-heart-outline"} color={color} />
             ),
@@ -72,7 +72,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="profile"
           options={{
-            title: "Explore",
+            title: "profile",
             tabBarIcon: ({ color, focused }) => <MaterialCommunityIcons size={30} name={focused ? "account" : "account-outline"} color={color} />,
           }}
         />

@@ -6,11 +6,13 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import VerticalCard from "@/components/VerticalCard";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
   const tabBarHeight = useBottomTabBarHeight();
+  const router = useRouter();
   const cards = [
     {
       id: "1",
@@ -33,31 +35,31 @@ export default function HomeScreen() {
       id: "1",
       title: "Alaska",
       description: "Explore the breathtaking landscapes of Alaska, from glaciers to wildlife.",
-      image: "https://images.pexels.com/photos/26618535/pexels-photo-26618535.jpeg?auto=compress&cs=tinysrgb&h=800&w=600",
+      image: "https://images.pexels.com/photos/26618535/pexels-photo-26618535.jpeg?auto=compress&cs=tinysrgb&h=300&w=300",
     },
     {
       id: "2",
       title: "Marari",
       description: "Relax on the serene beaches of Marari, known for its tranquil atmosphere.",
-      image: "https://images.pexels.com/photos/13354560/pexels-photo-13354560.jpeg?auto=compress&cs=tinysrgb&h=800&w=600",
+      image: "https://images.pexels.com/photos/13354560/pexels-photo-13354560.jpeg?auto=compress&cs=tinysrgb&h=300&w=300",
     },
     {
       id: "3",
       title: "Gokarna",
       description: "Discover the hidden gems of Gokarna, a coastal town with stunning beaches.",
-      image: "https://images.pexels.com/photos/30873476/pexels-photo-30873476.jpeg?auto=compress&cs=tinysrgb&h=800&w=600",
+      image: "https://images.pexels.com/photos/30873476/pexels-photo-30873476.jpeg?auto=compress&cs=tinysrgb&h=300&w=300",
     },
     {
       id: "4",
       title: "Gokarna",
       description: "Discover the hidden gems of Gokarna, a coastal town with stunning beaches.",
-      image: "https://images.pexels.com/photos/30873476/pexels-photo-30873476.jpeg?auto=compress&cs=tinysrgb&h=800&w=600",
+      image: "https://images.pexels.com/photos/30873476/pexels-photo-30873476.jpeg?auto=compress&cs=tinysrgb&h=300&w=300",
     },
     {
       id: "5",
       title: "Gokarna",
       description: "Discover the hidden gems of Gokarna, a coastal town with stunning beaches.",
-      image: "https://images.pexels.com/photos/30873476/pexels-photo-30873476.jpeg?auto=compress&cs=tinysrgb&h=800&w=600",
+      image: "https://images.pexels.com/photos/30873476/pexels-photo-30873476.jpeg?auto=compress&cs=tinysrgb&h=300&w=300",
     },
   ];
   return (
@@ -76,7 +78,13 @@ export default function HomeScreen() {
             ItemSeparatorComponent={() => <View style={{ width: 16 }} />}
             contentContainerStyle={{ paddingHorizontal: 16 }}
             showsHorizontalScrollIndicator={false}
-            renderItem={(card) => <HorizontalCard title={card.item.title} image={card.item.image} />}
+            renderItem={(card) => (
+              <HorizontalCard
+                title={card.item.title}
+                image={card.item.image}
+                handlePress={() => router.push({ pathname: "/details/[id]", params: { id: card.index } })}
+              />
+            )}
           />
         </ThemedView>
         <ThemedView style={styles.subTitleContainer}>

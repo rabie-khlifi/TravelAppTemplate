@@ -1,7 +1,7 @@
 import { constant } from "@/constants/Constans";
 import { useColorScheme } from "@/hooks/useColorScheme.web";
-import { DrawerItemList, useDrawerProgress } from "@react-navigation/drawer";
-import React, { useReducer } from "react";
+import { DrawerItem, useDrawerProgress } from "@react-navigation/drawer";
+import React, { useEffect, useReducer } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Animated, { interpolate, useAnimatedStyle, useDerivedValue, withTiming } from "react-native-reanimated";
 //import { ProfileMenu, ProjectsArray } from "../arrays";
@@ -10,11 +10,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 //import DrawerItemList from "./DrawerItemList";
 import { Colors } from "@/constants/Colors";
+import { usePathname } from "expo-router";
 
 const CustomDrawer = (props: any) => {
   const colorScheme = useColorScheme() ?? "light";
   const { state, descriptors, navigation } = props;
-
+  const pathName = usePathname();
   const [show, toggleProfile] = useReducer((s) => !s, false);
 
   const progress = useDerivedValue(() => {
@@ -47,6 +48,21 @@ const CustomDrawer = (props: any) => {
         opacity,
       };
     });
+  useEffect(() => {
+    console.log(pathName);
+  }, [pathName]);
+
+  const handelFocused = (key: string): boolean | undefined => {
+    switch (key) {
+      case "home":
+        return pathName === "/"; // or your home path
+      case "favorites":
+        return pathName === "/favorites";
+      // add more cases as needed
+      default:
+        return undefined;
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -61,8 +77,63 @@ const CustomDrawer = (props: any) => {
         </View>
       </Animated.View>
       {/* Drawer List Item */}
-      <Animated.View {...props} showsVerticalScrollIndicator={false} style={[styles.center, styles.ItemList, viewStyles]}>
-        <DrawerItemList {...props} />
+      <Animated.View style={[styles.center, styles.ItemList, viewStyles]}>
+        {/* handle drawer render automatically */}
+        {/* <DrawerItemList {...props} /> */}
+        <DrawerItem
+          label={"Home"}
+          onPress={() => {
+            navigation.navigate("(tabs)", { screen: "index" });
+          }}
+          focused={handelFocused("home")}
+          labelStyle={{ fontFamily: "Roboto", fontWeight: "700", fontSize: 20 }}
+          activeTintColor={Colors[colorScheme].text}
+          inactiveTintColor={Colors[colorScheme].textLight}
+          activeBackgroundColor="transparent"
+        />
+        {/* Example on how to map the DrawerItems manually */}
+        {state.routes.map((route: any, index: number) => {
+          const { drawerLabel, title, drawerIcon } = descriptors[route.key].options;
+          if (route.name === "(tabs)") {
+            return null; // Skip the index route
+          }
+          return (
+            <DrawerItem
+              key={route.key}
+              {...props}
+              label={drawerLabel ?? title ?? route.name}
+              focused={state.index === index}
+              onPress={() => {
+                navigation.navigate(route.name);
+              }}
+              labelStyle={{ fontFamily: "Roboto", fontWeight: "700", fontSize: 20 }}
+              activeTintColor={Colors[colorScheme].text}
+              inactiveTintColor={Colors[colorScheme].textLight}
+              activeBackgroundColor="transparent"
+            />
+          );
+        })}
+        <DrawerItem
+          label={"Favorite"}
+          onPress={() => {
+            navigation.navigate("(tabs)", { screen: "favorites" });
+          }}
+          focused={handelFocused("favorites")}
+          labelStyle={{ fontFamily: "Roboto", fontWeight: "700", fontSize: 20 }}
+          activeTintColor={Colors[colorScheme].text}
+          inactiveTintColor={Colors[colorScheme].textLight}
+          activeBackgroundColor="transparent"
+        />
+        <DrawerItem
+          label={"Log out"}
+          onPress={() => {
+            console.log("logout pressed");
+          }}
+          labelStyle={{ fontFamily: "Roboto", fontWeight: "700", fontSize: 20 }}
+          activeTintColor={Colors[colorScheme].text}
+          inactiveTintColor={Colors[colorScheme].textLight}
+          activeBackgroundColor="transparent"
+        />
       </Animated.View>
     </SafeAreaView>
   );

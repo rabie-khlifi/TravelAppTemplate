@@ -10,17 +10,17 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 export const HEADER_HEIGHT = 56;
 
 type CustomHeaderProps = {
-  title: string;
-  leftType?: "drawer" | "back";
+  title?: string;
+  type?: "drawer" | "back";
   onSearchPress?: () => void;
 };
 
-const CustomHeader: React.FC<CustomHeaderProps> = ({ title, leftType = "drawer", onSearchPress }) => {
+const CustomHeader: React.FC<CustomHeaderProps> = ({ title, type = "drawer", onSearchPress }) => {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
   const colorScheme = useColorScheme();
   const handleLeftPress = () => {
-    if (leftType === "drawer") {
+    if (type === "drawer") {
       // @ts-ignore
       navigation.openDrawer && navigation.openDrawer();
     } else {
@@ -31,7 +31,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title, leftType = "drawer",
   return (
     <ThemedView style={[styles.container, { top: insets.top }]}>
       <TouchableOpacity onPress={handleLeftPress} style={styles.iconButton}>
-        <MaterialCommunityIcons name={leftType === "drawer" ? "menu" : "arrow-left"} size={28} color={Colors[colorScheme ?? "light"].text} />
+        <MaterialCommunityIcons name={type === "drawer" ? "menu" : "arrow-left"} size={28} color={Colors[colorScheme ?? "light"].text} />
       </TouchableOpacity>
       <View style={styles.titleWrapper}>
         <ThemedText type="title" numberOfLines={1} style={styles.title}>

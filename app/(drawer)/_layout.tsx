@@ -38,15 +38,7 @@ export default function DrawerLayout() {
             name="(tabs)" // This is the name of the page and must match the url from root
             options={{
               drawerLabel: "Home",
-              title: "overview",
-              headerShown: false,
-            }}
-          />
-          <Drawer.Screen
-            name="settings"
-            options={{
-              drawerLabel: "settings",
-              title: "settings",
+              title: "Home",
               headerShown: false,
             }}
           />
@@ -67,14 +59,6 @@ export default function DrawerLayout() {
             }}
           />
           <Drawer.Screen
-            name="Favorite"
-            options={{
-              drawerLabel: "Favorite",
-              title: "Favorite",
-              headerShown: false,
-            }}
-          />
-          <Drawer.Screen
             name="Messages"
             options={{
               drawerLabel: "Messages",
@@ -87,6 +71,14 @@ export default function DrawerLayout() {
             options={{
               drawerLabel: "Profile",
               title: "Profile",
+              headerShown: false,
+            }}
+          />
+          <Drawer.Screen
+            name="settings"
+            options={{
+              drawerLabel: "settings",
+              title: "settings",
               headerShown: false,
             }}
           />
